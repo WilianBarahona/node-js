@@ -1,0 +1,93 @@
+//Instalar express (es un framework para gestionar el servidor)
+npm install --save express
+npm i -S express
+
+//Body-Parser --> permite que al hacer peticiones != get(post, delete ,...) poder parsear o obtner la url
+// Esta libreria funciona como un middleware cada que se realice una peticion http se pasa por distintas capas (jerarquias de peticiones)
+
+npm i -S body-parser
+
+//nodemon --> modulo para que cada vez que se detecte un cambio en el servidor este se reinicie automaticamete es un tipo de watch
+npm i -g nodemon //instalarlo de manera global
+
+//Configuracion del start
+ "scripts": {
+    "start": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  //para iniciar solo escribimos el comando npm start
+
+
+// Full Rest Api
+/* https://assertible.com/blog/7-http-methods-every-web-developer-should-know-and-how-to-test-them
+
+Debe tener como minimo los metodos http:
+  *GET: GETLas solicitudes son los métodos más comunes y ampliamente utilizados en API y sitios web. 
+  En pocas palabras, el método GET se utiliza para recuperar datos de un servidor en el recurso 
+  especificado . Por ejemplo, supongamos que tiene una API con un /userspunto final. 
+  Hacer una solicitud GET a ese punto final debería devolver una lista de todos los usuarios disponibles.
+
+  Dado que una solicitud GET solo solicita datos y no modifica ningún recurso, se considera un método seguro.
+
+  En un nivel básico, estas cosas deben validarse:
+    *Verifique que una solicitud GET válida devuelva un 200código de estado.
+    *Asegúrese de que una solicitud GET a un recurso específico devuelva los datos correctos. 
+    Por ejemplo, GET /usersdevuelve una lista de usuarios.
+
+ 
+    GET ==> /store/inventory  --> retorna todo el inventario
+            /store/order/{orderId} -> buscar una orden por id
+            (GET: (READ))
+
+
+  *POST: El segundo método HTTP más común que encontrará en sus pruebas de API es POST. 
+         Como se mencionó anteriormente , las POST solicitudes se utilizan para enviar datos al servidor API y 
+         crear o actualizar un recurso. Dado que las solicitudes POST modifican los datos,
+          es importante tener pruebas de API para todos sus métodos POST .
+    Aquí hay algunos consejos para probar las solicitudes POST:
+
+    *Cree un recurso con una POST solicitud y asegúrese de que 200 se devuelva un código de estado.
+    *Luego, haga una GETsolicitud para ese recurso y asegúrese de que los datos se hayan guardado correctamente.
+    *Agregue pruebas que garanticen que las POSTsolicitudes fallen con datos incorrectos o con formato incorrecto.
+
+  POST ==> /store/order -> realiza una orden o pedido 
+            (POST: (INSERT))
+
+  *PUT: De manera similar a POST, las PUTsolicitudes se utilizan para enviar datos a la API para crear o actualizar un
+        recurso . La diferencia es que las solicitudes PUT son idempotentes . Es decir, llamar a la misma solicitud PUT 
+        varias veces siempre producirá el mismo resultado . Por el contrario, llamar a una solicitud POST repetidamente
+        puede tener efectos secundarios de crear el mismo recurso varias veces.
+    Probar los PUTmétodos de una API es muy similar a probar las solicitudes POST. Pero ahora que sabemos la diferencia entre los dos (idempotencia), podemos crear pruebas de API para confirmar este comportamiento .
+
+    Verifique estas cosas cuando pruebe las solicitudes PUT:
+
+    *Repetidamente, una PUT solicitud siempre devuelve el mismo resultado.
+    *Después de actualizar un recurso con una PUTsolicitud, una GETsolicitud para ese recurso debería devolver los datos nuevos.
+    *PUT las solicitudes deberían fallar si se proporcionan datos no válidos en la solicitud; no se debe actualizar nada .
+
+    (PUT: (UPDATE))
+
+  *DELETE:  DELETE es exactamente como suena: elimine el recurso en la URL especificada . 
+            Este método es uno de los más comunes en las API RESTful, por lo que es bueno saber cómo funciona.
+
+    Si se crea un nuevo usuario con una solicitud POST para /users, 
+    y se puede recuperar con una GET solicitud para /users/{{userid}}, 
+    entonces, al realizar una solicitud DELETE, /users/{{userid}} se eliminará por completo a ese usuario.
+
+    Las solicitudes DELETE deben probarse en gran medida ya que generalmente eliminan datos de una base de datos. 
+    Tenga cuidado al probar los métodos DELETE, asegúrese de usar las credenciales correctas y de no probar con datos reales 
+    las solicitudes del usuario.
+
+    Un caso de prueba típico para una solicitud DELETE se vería así:
+
+    *Cree un nuevo usuario con una POST solicitud para/users
+    *Con el ID de usuario devuelto desde POST, haga una DELETEsolicitud a/users/{{userid}}
+    *Una solicitud GET posterior a /users/{{userid}}debe devolver un código de estado 404 no encontrado.
+    *Además, el envío de una solicitud DELETE a un recurso desconocido debería devolver un código de estado que no sea 200 .
+
+    DELETE ==> /store/order/{orderId} --> elimina la orden con ese id
+
+    (DELETE: (DELETE))
+
+*/
