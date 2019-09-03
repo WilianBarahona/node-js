@@ -1,5 +1,5 @@
 {
-  "name": "api-rest",
+  "name": "rest-api",
   "version": "1.0.0",
   "description": "Rest Api Node JS +  Mongo DB",
   "main": "index.js",
