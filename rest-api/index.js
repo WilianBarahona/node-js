@@ -36,6 +36,29 @@ app.get('/hola/:name',(req, res)=>{
     res.send({message:`hola ${req.params.name}`}) //obtener los parametros enviados por la url--> req.params.name
 })
 
+// Peticiones basicas
+app.get('/api/products',(req, res)=>{ //url ==> endpoint
+    res.send(200, {products: {}}) //200: Ok
+})
+
+app.get('/api/products/:id',(req, res)=>{
+
+})
+
+app.post('/api/products/',(req, res)=>{
+    //req.body => acceder al curpo de la peticion 
+    res.send(200, {menssage: 'El producto se ha recibido'})
+})
+
+app.put('/api/products/:id',(req, res)=>{
+
+})
+
+app.delete('/api/products/:id',(req, res)=>{
+
+})
+
+
 app.listen(port, ()=>{
     console.log(`sevidor levantado localhost:${port}`)
 })
