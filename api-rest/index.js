@@ -33,7 +33,7 @@ app.get('/hola',(req, res)=>{
 //parametros
 app.get('/hola/:name',(req, res)=>{
     //req -> request, res -> response
-    res.send({message:`hola ${req.params.name}`})  //obtener los parametros enviados por la url--> req.params.name
+    res.send({message:`hola ${req.params.name}`}) //obtener los parametros enviados por la url--> req.params.name
 })
 
 app.listen(port, ()=>{

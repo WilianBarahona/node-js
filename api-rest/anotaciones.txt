@@ -1,3 +1,11 @@
+REST --> Representational State Transfer, un servicio rest no es una arquitectura de software, sino un conjunto
+de restricciones con las que podemos crear un estilo de arquitectura de software, la cual podemos usar para crear
+aplicaciones web respetando los protocolos HTTP.
+
+API --> Aplication programming interface es una definicion de subrutinas, protocolos, y herramientas para crear software
+
+Un RESTful API debe contener al menos las cuatro solicitudes basicas CRUD  -> C(POST) R(GET) U(PUT) D(DELETE)
+
 //Instalar express (es un framework para gestionar el servidor)
 npm install --save express
 npm i -S express
@@ -22,11 +30,15 @@ npm i -g nodemon //instalarlo de manera global
 // Full Rest Api
 /* https://assertible.com/blog/7-http-methods-every-web-developer-should-know-and-how-to-test-them
 
+EndPoint -> punto de entrada o acceso ejemplo /users
+
 Debe tener como minimo los metodos http:
-  *GET: GETLas solicitudes son los métodos más comunes y ampliamente utilizados en API y sitios web. 
+  *GET: Las solicitudes GET son los métodos más comunes y ampliamente utilizados en API y sitios web. 
   En pocas palabras, el método GET se utiliza para recuperar datos de un servidor en el recurso 
   especificado . Por ejemplo, supongamos que tiene una API con un /userspunto final. 
   Hacer una solicitud GET a ese punto final debería devolver una lista de todos los usuarios disponibles.
+
+  LOS DATOS VIAJAN EN LA CABEZERA DEL MENSAJE (URL)
 
   Dado que una solicitud GET solo solicita datos y no modifica ningún recurso, se considera un método seguro.
 
@@ -45,6 +57,9 @@ Debe tener como minimo los metodos http:
          Como se mencionó anteriormente , las POST solicitudes se utilizan para enviar datos al servidor API y 
          crear o actualizar un recurso. Dado que las solicitudes POST modifican los datos,
           es importante tener pruebas de API para todos sus métodos POST .
+
+    LOS DATOS VIAJAN EN EL CUERPO DEL MENSAJE Y NO EN LA CABEZERA A DIFERENCIA DE GET
+
     Aquí hay algunos consejos para probar las solicitudes POST:
 
     *Cree un recurso con una POST solicitud y asegúrese de que 200 se devuelva un código de estado.
@@ -54,11 +69,12 @@ Debe tener como minimo los metodos http:
   POST ==> /store/order -> realiza una orden o pedido 
             (POST: (INSERT))
 
-  *PUT: De manera similar a POST, las PUTsolicitudes se utilizan para enviar datos a la API para crear o actualizar un
+  *PUT: De manera similar a POST, las solicitudes PUT se utilizan para enviar datos a la API para crear o actualizar un
         recurso . La diferencia es que las solicitudes PUT son idempotentes . Es decir, llamar a la misma solicitud PUT 
         varias veces siempre producirá el mismo resultado . Por el contrario, llamar a una solicitud POST repetidamente
         puede tener efectos secundarios de crear el mismo recurso varias veces.
-    Probar los PUTmétodos de una API es muy similar a probar las solicitudes POST. Pero ahora que sabemos la diferencia entre los dos (idempotencia), podemos crear pruebas de API para confirmar este comportamiento .
+
+    Probar los PUT de una API es muy similar a probar las solicitudes POST. Pero ahora que sabemos la diferencia entre los dos (idempotencia), podemos crear pruebas de API para confirmar este comportamiento .
 
     Verifique estas cosas cuando pruebe las solicitudes PUT:
 
@@ -89,5 +105,48 @@ Debe tener como minimo los metodos http:
     DELETE ==> /store/order/{orderId} --> elimina la orden con ese id
 
     (DELETE: (DELETE))
+
+    *PATCH: es uno de los metodos http menos conocidos, es similar a POST y PUT, con la gran diferencia que PATCH solo aplica modificaciones
+            parciales al recurso
+
+            Para ampliar una modificación parcial, supongamos que su API tiene un /users/{{userid}}punto final y un usuario tiene un nombre de usuario .
+            Con una solicitud PATCH, es posible que solo necesite enviar el nombre de usuario actualizado en el cuerpo de la solicitud, en lugar de POST y PUT 
+            que requieren la entidad de usuario completa.
+
+   *HEAD: El HEAD es casi idéntico GET, excepto sin el cuerpo de respuesta . En otras palabras, si GET /usersdevuelve una lista de usuarios,
+          HEAD /usersrealizará la misma solicitud pero no recuperará la lista de usuarios.
+
+          Las solicitudes HEAD son útiles para verificar qué devolverá una solicitud GET antes de realizar una solicitud GET, como antes de 
+          descargar un archivo grande o un cuerpo de respuesta. Obtenga más información sobre las solicitudes HEAD en MDN .
+
+           Vale la pena señalar que no todos los puntos finales que admiten GET admitirán HEAD; esto depende completamente de la API que está probando.
+  
+  *OPTIONS: Estas solicitudes no son tan utilizadas pero son muy utililes para probar errores faltaes de la API
+
+
+
+  ===============CODIGOS DE RESPUESTA===================
+  Son los codigos que se enviaran desde el servidor hacia el cliente para informa el estado de la peticion
+  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+
+  //los codigos docientos indican que todo esta bien
+  *200: ok -> todo esta bien
+
+  //los codigos trecientos sirven para redireccionar al cliente a otra url
+
+  //los codigos cuatrocientos indican errores en los recursos
+  *404: not found -> recurso no encontrado
+  *403: forbidden --> la solicitud fue valida, pero el servidor rechaza la accion, por falta de permisos del usuario por ejemplo
+ 
+  // los codigos quinientos indican errores del servidor
+
+
+
+
+  ===========HERRAMIENTAS===================
+  POSTMAN || Insomnia rest client: para permite crear peticiones sobre Apis de una manera muy sencialla para poder probar las mismas
+
+  
+
 
 */
