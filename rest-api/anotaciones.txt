@@ -147,6 +147,27 @@ Debe tener como minimo los metodos http:
   POSTMAN || Insomnia rest client: para permite crear peticiones sobre Apis de una manera muy sencialla para poder probar las mismas
 
   
+  ==================Mongoose=====================
+  Mongoose es un modulo de node js, que permite definir schemas dado que mongodb es carente de schemas,
+  a demas permite crear de la db con el backend de una manera mas rapida y sencialla
+
+  En el esquema se definen los campos que contendria cada documento en una determinada colleccion
+
+  Al nivel del la carpeta root, por estandar se crea una carpeta llamada models,
+  el nombre de los archivos de models van en singular y los modelos en plural por estandar
+
+  models
+     product.js
+        //export 
+        mongoose.model('products', model)
+     category.js
+        
+
+  importar el modelos
+  --------------------------
+  const schemaProducts = require('./models/product') // ./ directorio raiz, product.js => se omite la extencion
+
+
 
 
 */
