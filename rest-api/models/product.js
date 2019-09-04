@@ -1,8 +1,7 @@
 'use strict' //modo estricto, evita muchas cosas de js, como asignar valores a una variable indefinida x=5 => error porque no esta definida, var x = 5 => ok
 const mongoose = require('mongoose') //importar mongoose
-const Schema = mongoose.Schema
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
     //estructura del schema
     name: String,
     picture: String,

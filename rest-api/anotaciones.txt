@@ -163,11 +163,14 @@ Debe tener como minimo los metodos http:
      category.js
         
 
-  importar el modelos
+  Importar el modelos
   --------------------------
   const schemaProducts = require('./models/product') // ./ directorio raiz, product.js => se omite la extencion
 
 
+  Encriptacion
+  --------------------
+  usar libreria bcrypt => require('bcrypt-nodejs')
 
 
 */
