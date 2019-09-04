@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000 //process.env.PORT ==> variable de entorno
 const mongoose  = require('mongoose') // modulo para gestionar schemas en mongodb y conectarse de manera mas facil
 
 //Schemas
-const schemaProducts = require('./models/product') //importar el schema product
+const product = require('./models/product') //importar el schema product
 
 const app = express()
 
@@ -43,9 +43,10 @@ app.get('/hola/:name',(req, res)=>{
 
 mongoose.connect(`mongodb://localhost:27017/shop`, { useNewUrlParser: true }) //puerto por defecto es 27017 de mongo db, mongodb://ip:port/name_db
 .then((res)=>{                                                                // => { useNewUrlParser: true }, agregar este json, de omitirlo muestra un warning de deprecation
-    //function callback, todo esta bien => esta es una promesa, se ejecuta una vez se hay finalizado la conexion a mongodb
-    console.log(`Se conecto a mongodb: ${res}`)
+//function callback, todo esta bien => esta es una promesa, se ejecuta una vez se hay finalizado la conexion a mongodb
+console.log(`Se conecto a mongodb: ${res}`)
 
+    //Antes de levantar el servidor es necesario tener la base de datos conectada, para evitar errores
     //una vez conectado a mongodb, levantar el server
     app.listen(port, ()=>{
         console.log(`sevidor levantado localhost:${port}`)
@@ -61,11 +62,36 @@ mongoose.connect(`mongodb://localhost:27017/shop`, { useNewUrlParser: true }) //
 
 // Peticiones basicas
 app.get('/api/products',(req, res)=>{ //url ==> endpoint
-    res.status(200).send({products: {}}) //200: Status Ok
+    //res.status(200).send({data: data}) //200: Status Ok, {data: data} => con ES6 se puede sustituir por {data}
+    product.find()
+    .then((data)=>{
+        //promesa
+        if(!data)
+            return res.status(404).send({message:`No existen productos`})
+        
+        res.status(200).send({data})
+    })
+    .catch((error)=>{
+        //promesa
+        if(error)
+            return res.status(500).send({error})
+    })
 })
 
 app.get('/api/products/:id',(req, res)=>{
-    
+    //Obtener un porducto en especifico
+    product.findById(req.params.id) //Funcion de mongodb, para buscar en la collection producto por id
+    .then((data)=>{// promesa, data=> contiene el json del id especificado
+        //ejecutar el siguiente codigo una vez finalizada la funcion findById
+        if (!data)
+          return res.status(404).send({message: `El producto ${productId} no existe`, error: true})
+
+        res.status(200).send({data}) // {data: data} => se puede reducir con ES6 a {data}
+    })
+    .catch((error)=>{//Promasa, en caso de error
+        if(error) 
+            return res.status(500).send({error})
+    })
 })
 
 app.post('/api/products/',(req, res)=>{
@@ -73,7 +99,7 @@ app.post('/api/products/',(req, res)=>{
     // res.status(200).send({menssage: 'El producto se ha recibido', params: req.body})
 
     //Instanciar el modelo
-    let product = new schemaProducts({
+    let product = new product({
         name: req.body.name,
         price: req.body.price,
         picture: req.body.picture,
@@ -83,20 +109,47 @@ app.post('/api/products/',(req, res)=>{
     }) //objecto de mongoose
 
     product.save()
-    .then(obj=>{
-        res.status(200).send(obj);
+    .then((data)=>{
+        res.status(200).send({data});
     })
-    .catch(error=>{
-        res.status(500).send({message:`Error al guardar el producto en la base de datos: ${error}`})
+    .catch((error)=>{
+        res.status(500).send({error})
     });
 })
 
 app.put('/api/products/:id',(req, res)=>{
+    // update({filtro:id},{nuevos datos})
+    product.updateOne(
+        {_id: req.params.id}, //Json filtro
+        { //json => datos nuevos
+            name: req.body.name,
+            picture: req.body.picture,
+            price: req.body.price,
+            category: req.body.category,
+            description: req.body.description
+
+        }
+        )
+        .then((data)=>{
+            res.status(200).send({data})
+        })
+        .catch((error)=>{
+            res.status(500).send({error})
+        })
+
 
 })
 
 app.delete('/api/products/:id',(req, res)=>{
-
+   // delete
+    product.remove({_id: req.params.id}) //eliminar un documenteo de una collection
+    .then((data)=>{// promesa, data=> contiene el json del id especificado
+        //ejecutar el siguiente codigo una vez finalizada la funcion findById
+        res.status(200).send({data}) // {data: data} => se puede reducir con ES6 a {data}
+    })
+    .catch((error)=>{//Promasa, en caso de error
+        if(error) 
+            return res.status(500).send({error})
+    })
 })
 
-//Antes de levantar el servidor es necesario tener la base de datos conectada, para evitar errores

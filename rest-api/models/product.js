@@ -1,8 +1,8 @@
 'use strict' //modo estricto, evita muchas cosas de js, como asignar valores a una variable indefinida x=5 => error porque no esta definida, var x = 5 => ok
 const mongoose = require('mongoose') //importar mongoose
-const schema = mongoose.Schema
+const Schema = mongoose.Schema
 
-const productSchema = schema({
+const productSchema = new Schema({
     //estructura del schema
     name: String,
     picture: String,
@@ -12,5 +12,5 @@ const productSchema = schema({
     description: String
 })
 
-//exportar el modelo ==> mongoose.model('name_model',schema)
+//exportar el modelo ==> mongoose.model('name_model => se crea una nueva collection por cada modelo, en caso de existir solo se abre',schema)
 module.exports = mongoose.model('products', productSchema)
