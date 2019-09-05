@@ -178,4 +178,30 @@ Debe tener como minimo los metodos http:
   npm i -S crypto
 
 
+
+
+  ==================JSON Web Tokens=========================
+  En caso de tener el backend separado completamente del frontend, para gestionar las seciones se puede
+  utilizar json web tokens
+  https://jwt.io/
+  Json web tokens es un standar, este token queda almacenado en el localstorage o en el session storage
+  por cada peticion http que se haga del cliente al server, este toque viajara en el header de las peticiones
+
+  json web tokes se divide en 3 partes
+    header: informacion del token , Encriptacion y tipo de token
+    payload: datos a enviar al server => sub->id publico, se pueden añadir fechas de caducidad del token, efectos,
+             tiene un atributo admin: true por defecto, que no se puede manejar como publico debe tratarse en el server
+    verify signature: verifica que el token corresponda a uno valido, este tiene un atributo secret por defecto, que no puede viajar publicamente
+                      por lo que es necesario tratarlo en el server
+
+                      el secret concatena el header y payload, apartir de este se verifica la validez del token
+
+ modulo de node js para json web tokens
+ ------------------------------------------
+ npm i -S jwt-simple
+
+ para el manejo de fecha en js
+ ------------------------------
+ npm i -S moment
+
 */
