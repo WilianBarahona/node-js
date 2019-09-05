@@ -172,5 +172,10 @@ Debe tener como minimo los metodos http:
   --------------------
   usar libreria bcrypt => require('bcrypt-nodejs')
 
+  Md5 para gravatar
+  ------------------
+  Generar avatar con registrando emails, gravatar usa md5 en sus url para generar los avatar
+  npm i -S crypto
+
 
 */
