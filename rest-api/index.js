@@ -3,8 +3,8 @@ const mongoose  = require('mongoose')
 const app = require('./app')
 const config = require('./config')
 
-mongoose.connect(config.db, { useNewUrlParser: true }) //puerto por defecto es 27017 de mongo db, mongodb://ip:port/name_db
-.then((res)=>{                                          // => { useNewUrlParser: true }, agregar este json, de omitirlo muestra un warning de deprecado
+mongoose.connect(config.db, { useNewUrlParser: true, useCreateIndex: true}) //puerto por defecto es 27017 de mongo db, mongodb://ip:port/name_db
+.then((res)=>{                                          // => { useNewUrlParser: true, useCreateIndex: true }, agregar este json, de omitirlo muestra un warning de deprecado
 //function callback, todo esta bien => esta es una promesa, se ejecuta una vez se hay finalizado la conexion a mongodb
 console.log(`Se conecto a mongodb`)
     //Antes de levantar el servidor es necesario tener la base de datos conectada, para evitar errores

@@ -1,6 +1,5 @@
 //Autenticacion de usuarios
 'use strict'
-const mongoose = require('mongoose')
 const User = require('../models/user')
 const service = require('../services')
 
@@ -9,19 +8,19 @@ function singUp(req, res){
     const user = new User({
         email: req.body.email,
         name: req.body.name,
+        password: req.body.password
         //avatar => este se genera a partir del email
         //password => la funcion pre ya se encarga de guardar el password
         //signupDate => por defecto se guarda la fecha actual
         //lastLogin => hasta no volverse a logear no es necesario
     })
 
-    user.save()
-    .then((data)=>{
-        res.status(200).send({token: service.createToken(user)});
+    user.save((err) => {
+         if (err) 
+            return res.status(500).send({ message: `Error al crear el usuario: ${err}` })
+
+         return res.status(201).send({ token: service.createToken(user) })
     })
-    .catch((error)=>{
-        res.status(500).send({error})
-    });
 }
 
 function singIn(req, res){

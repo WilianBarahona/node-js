@@ -16,15 +16,16 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', (next) =>{
     //pre => antes , save, antes de guardar, next para avanzar al siguiente middleware y no se quede parada esta funcion
     let user = this // this => userSchema
-    if(!user.isModified('password')) //si el usuario no ha modificado el password
-        //==>No encriptar
-        return next() //pase al sigueinte middleware
+    // if(!user.isModified('password')) //si el usuario no ha modificado el password
+    //     //==>No encriptar
+    //     return next() //pase al sigueinte middleware
+
     bcrypt.genSalt(10, (error, salt)=>{ //salt => datosAleatorios que se usan como entrada adicionala al texto plano del password
                                             //10 => saltRound
         if(error)
             return next() //pasar al siguiente middelware
         
-        bcrypt.hash(user.password, salt, (error, hash)=>{
+        bcrypt.hash(user.password, salt, null, (error, hash)=>{
             //Store hash in your password DB
             if(error)
                 return next()

@@ -8,6 +8,6 @@ const productRouter = require('./routes/product-route')
 //middleware
 app.use(bodyParser.urlencoded({extended: false}))                         
 app.use(bodyParser.json())
-app.use('/api/products', productRouter)
+app.use('/api', productRouter)
 
 module.exports = app
