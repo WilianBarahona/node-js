@@ -25,10 +25,25 @@ function singUp(req, res){
 }
 
 function singIn(req, res){
-    //registrar
+    //Login
+    User.find({email: req.body.email})
+    .then((data)=>{
+        if(!data)
+            return res.status(404).send({message: `El usuario no existe`})
+
+        req.user = data
+        res.status(200).send({
+            message: `Te has logeado correctamente`,
+            token: service.createToken(user)
+        })
+        
+    })
+    .catch((error)=>{
+        res.status(500).send({message: error})
+    })
 }
 
 module.exports ={
     singUp,
-    singUp
+    singIn
 }
