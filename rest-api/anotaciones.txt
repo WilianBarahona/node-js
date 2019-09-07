@@ -207,7 +207,7 @@ Debe tener como minimo los metodos http:
 
 
  ==============Renderizar html con nodejs=================
- librerias
+ librerias -> motor de plantillas
  npm i -S express-handlebars
 
 */

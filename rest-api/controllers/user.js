@@ -33,7 +33,7 @@ function singIn(req, res){
         req.user = data
         res.status(200).send({
             message: `Te has logeado correctamente`,
-            token: service.createToken(user)
+            token: service.createToken(data)
         })
         
     })
