@@ -208,6 +208,6 @@ Debe tener como minimo los metodos http:
 
  ==============Renderizar html con nodejs=================
  librerias
- 
+ npm i -S express-handlebars
 
 */
