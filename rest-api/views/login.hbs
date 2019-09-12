@@ -11,12 +11,15 @@
 
     formLogin.addEventListener('submit', event => {
         event.preventDefault() //Evitar el recargado de la pagina, por defecto que hace submit
-        fetch('/api/signin', {
+        fetch('/api/singin', {
             method: 'POST',
             body: formData
         })
         .then(res => res.json())
-        //.then(data => console.log(data))
+        .then(data => {
+        localStorage.setItem('token', data.token)
+        })
+        
     })
     
 </script>

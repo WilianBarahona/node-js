@@ -13,12 +13,12 @@ const userSchema = new mongoose.Schema({
 })
 
 //Moongose proporciona funcionalidades que se pueden ejecutar antes o despues de almacenar en la db
-userSchema.pre('save', (next) =>{
+userSchema.pre('save', function (next) {
     //pre => antes , save, antes de guardar, next para avanzar al siguiente middleware y no se quede parada esta funcion
     let user = this // this => userSchema
-    // if(!user.isModified('password')) //si el usuario no ha modificado el password
-    //     //==>No encriptar
-    //     return next() //pase al sigueinte middleware
+    if(!user.isModified('password')) //si el usuario no ha modificado el password
+        //==>No encriptar
+        return next() //pase al sigueinte middleware
 
     bcrypt.genSalt(10, (error, salt)=>{ //salt => datosAleatorios que se usan como entrada adicionala al texto plano del password
                                             //10 => saltRound
@@ -26,7 +26,6 @@ userSchema.pre('save', (next) =>{
             return next() //pasar al siguiente middelware
         
         bcrypt.hash(user.password, salt, null, (error, hash)=>{
-            //Store hash in your password DB
             if(error)
                 return next()
             
@@ -37,7 +36,8 @@ userSchema.pre('save', (next) =>{
 }) 
 
 //Methods => funcionalidad de mongoose , metodos
-userSchema.methods.gravatar = ()=>{ //generar un avatar aleatorio con gravatar
+userSchema.methods.gravatar = function(){ //generar un avatar aleatorio con gravatar
+    
     if (!this.email) 
         return  `https://gravatar.com/avatar/?s=200&d=retro` // si no hay un email registrado en gravatar, establecer avatar por defecto
 
@@ -47,5 +47,12 @@ userSchema.methods.gravatar = ()=>{ //generar un avatar aleatorio con gravatar
     return `https://gravatar.com/avatar/${md5}?s=200&d=retro`
 
 }
+
+userSchema.methods.comparePassword = function (candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+      cb(err, isMatch)
+    });
+}
+
 
 module.exports = mongoose.model('users', userSchema)

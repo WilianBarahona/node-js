@@ -26,5 +26,10 @@ app.get('/login', (req, res)=>{
     res.render('login')
 })
 
+app.get('/products', (req, res)=>{
+    res.render('product')
+})
+
+
 
 module.exports = app
